@@ -90,7 +90,7 @@ No HTML, os botões `.ver` dessas versões estão com `disabled`. Quando houver 
 
 ## Publicação
 
-A versão jogável está publicada como artefato no claude.ai. O compartilhamento é feito pelo botão "Compartilhar" da página do artefato; use a opção "versão mais recente" para que o link acompanhe as atualizações.
+A versão jogável está publicada [aqui](https://daisonpaz.github.io/santo-ou-herege/).
 
 ## Próximos passos
 
