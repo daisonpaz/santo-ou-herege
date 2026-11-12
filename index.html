@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Santo ou Herege? — Teste de Doutrina Católica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#16100e; --bg2:#22171a; --wine:#5a1a24; --wine2:#7a2532;
+  --gold:#c9a24a; --gold2:#e6c97a; --parch:#f2e8d3; --parch2:#e7dabd;
+  --ink:#2a1d17; --muted:#6e5a48; --blue:#1f3a5f; --red:#9b2c2c;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:radial-gradient(ellipse at top,#2b1a1e 0%,var(--bg) 60%) fixed;
+  color:var(--parch); font-family:"EB Garamond",Georgia,serif; font-size:19px; line-height:1.5;
+  min-height:100vh;
+}
+.wrap{max-width:820px;margin:0 auto;padding:28px 20px 60px}
+h1,h2,h3,.cinzel{font-family:Cinzel,serif;letter-spacing:.04em}
+.gold{color:var(--gold2)}
+.orn{display:flex;align-items:center;gap:12px;color:var(--gold);justify-content:center;margin:10px 0}
+.orn::before,.orn::after{content:"";height:1px;flex:1;max-width:140px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+button{font-family:inherit;cursor:pointer}
+.hidden{display:none!important}
+
+/* hero */
+.hero{text-align:center;padding:30px 0 10px}
+.rose{width:96px;height:96px;margin:0 auto 10px}
+.hero h1{font-size:clamp(30px,6vw,48px);margin:6px 0 4px;color:var(--gold2)}
+.hero p.sub{font-size:21px;color:#e9dcc4;max-width:620px;margin:8px auto 0}
+.stats{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin:26px 0}
+.stat{border:1px solid rgba(201,162,74,.35);border-radius:10px;padding:10px 16px;background:rgba(0,0,0,.2);min-width:150px}
+.stat b{display:block;font-family:Cinzel,serif;font-size:24px;color:var(--gold2)}
+.stat span{font-size:15px;color:#cdbda3}
+
+.versions{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:22px 0}
+.ver{background:var(--parch);color:var(--ink);border-radius:12px;padding:18px;text-align:left;border:2px solid transparent;position:relative;transition:transform .15s,border-color .15s}
+.ver:hover:not(:disabled){transform:translateY(-3px);border-color:var(--gold)}
+.ver h3{margin:0 0 4px;font-size:20px;color:var(--wine)}
+.ver .meta{font-size:15px;color:var(--muted)}
+.ver p{margin:8px 0 0;font-size:16px}
+.ver.rec::after{content:"Recomendada";position:absolute;top:-10px;right:12px;background:var(--gold);color:var(--ink);font-family:Cinzel,serif;font-size:11px;padding:3px 8px;border-radius:20px}
+.ver:disabled{opacity:.55;cursor:not-allowed}
+.ver .soon{display:inline-block;margin-top:8px;font-size:13px;background:var(--parch2);padding:2px 8px;border-radius:12px}
+
+.how{background:rgba(0,0,0,.25);border:1px solid rgba(201,162,74,.25);border-radius:12px;padding:18px 22px;margin-top:26px}
+.how h2{font-size:18px;color:var(--gold2);margin:0 0 8px}
+.how ul{margin:0;padding-left:20px}
+.how li{margin:4px 0}
+.small{font-size:15px;color:#bfae93}
+
+/* quiz */
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.ramo{font-family:Cinzel,serif;color:var(--gold2);font-size:14px;letter-spacing:.12em;text-transform:uppercase}
+.count{font-size:15px;color:#cdbda3}
+.bar{height:6px;background:rgba(255,255,255,.08);border-radius:6px;overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--wine2),var(--gold));width:0;transition:width .3s}
+.qcard{background:var(--parch);color:var(--ink);border-radius:14px;padding:26px 24px;box-shadow:0 10px 40px rgba(0,0,0,.4);position:relative}
+.qcard::before{content:"";position:absolute;inset:6px;border:1px solid rgba(122,37,50,.25);border-radius:10px;pointer-events:none}
+.qtype{font-family:Cinzel,serif;font-size:12px;letter-spacing:.14em;color:var(--wine2);text-transform:uppercase}
+.qtext{font-size:23px;line-height:1.35;margin:6px 0 18px;font-weight:500}
+.axislbl{font-size:15px;color:var(--muted);font-style:italic;margin-top:-10px;margin-bottom:16px}
+.opt{border:1.5px solid #cdbb98;border-radius:10px;background:#fbf6ea;margin:10px 0;transition:border-color .15s,background .15s}
+.opt.sel{border-color:var(--wine2);background:#f6e6dc;box-shadow:0 0 0 2px rgba(122,37,50,.15)}
+.opt .main{display:flex;gap:12px;align-items:flex-start;padding:14px 14px 8px;width:100%;background:none;border:0;text-align:left;font-size:18px;color:var(--ink)}
+.opt .dot{flex:0 0 20px;height:20px;border-radius:50%;border:2px solid #a08a68;margin-top:4px}
+.opt.sel .dot{border-color:var(--wine2);background:radial-gradient(circle,var(--wine2) 45%,transparent 50%)}
+.opt .ctxbtn{background:none;border:0;color:var(--wine2);font-size:15px;padding:0 14px 12px 46px;font-style:italic}
+.opt .ctx{padding:0 16px 14px 46px;font-size:16px;color:#4a3a2e;border-top:1px dashed #d8c7a5;margin:0 14px;padding-top:10px;padding-left:32px}
+.nav{display:flex;justify-content:space-between;margin-top:20px;gap:10px}
+.btn{background:var(--gold);color:var(--ink);border:0;border-radius:30px;padding:11px 26px;font-family:Cinzel,serif;font-size:15px;letter-spacing:.06em}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--gold2);border:1px solid rgba(201,162,74,.5)}
+
+/* results */
+.verdict{text-align:center;padding:10px 0 4px}
+.verdict .pct{font-family:Cinzel,serif;font-size:64px;color:var(--gold2);line-height:1}
+.verdict h2{font-size:clamp(22px,4.5vw,32px);margin:10px 0 4px}
+.verdict p{color:#e3d4ba;max-width:620px;margin:6px auto}
+.sect{margin-top:34px}
+.sect>h3{color:var(--gold2);font-size:18px;margin:0 0 12px}
+.figs{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.fig{display:flex;gap:12px;align-items:center;background:var(--parch);color:var(--ink);border-radius:12px;padding:12px}
+.medal{flex:0 0 52px;height:52px;border-radius:50%;display:grid;place-items:center;font-family:Cinzel,serif;font-size:22px;font-weight:700;color:#fff;border:3px solid var(--gold)}
+.medal.saint{background:radial-gradient(circle at 35% 30%,#3a5f8f,var(--blue))}
+.medal.her{background:radial-gradient(circle at 35% 30%,#b84a3a,var(--wine))}
+.fig b{display:block;font-size:17px}
+.fig span{font-size:14px;color:var(--muted)}
+.fig .fp{margin-left:auto;font-family:Cinzel,serif;font-size:20px;color:var(--wine2)}
+.axisres{background:var(--parch);color:var(--ink);border-radius:12px;padding:16px 18px;margin:12px 0}
+.axisres h4{margin:0 0 2px;font-family:Cinzel,serif;font-size:16px;color:var(--wine)}
+.axisres .rm{font-size:13px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.spec{position:relative;height:12px;border-radius:12px;margin:22px 4px 6px;background:linear-gradient(90deg,#9b2c2c 0%,#d9b46a 38%,#3f7a4a 50%,#d9b46a 62%,#9b2c2c 100%)}
+.spec .mk{position:absolute;top:50%;width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--ink);transform:translate(-50%,-50%);transition:left .6s}
+.spec .ctr{position:absolute;left:50%;top:-6px;bottom:-6px;width:2px;background:var(--ink);opacity:.35}
+.ends{display:flex;justify-content:space-between;font-size:14px;gap:8px}
+.ends div{max-width:33%}
+.ends .c{text-align:center;color:#2f6a3a;font-weight:600}
+.ends .r{text-align:right}
+details{margin-top:10px;border-top:1px solid #d8c7a5;padding-top:8px}
+summary{cursor:pointer;color:var(--wine2);font-style:italic;font-size:16px}
+.pole{margin:10px 0;font-size:16px}
+.pole b{color:var(--wine)}
+.pole.ok b{color:#2f6a3a}
+.disc{margin-top:36px;font-size:15px;color:#bfae93;text-align:center}
+.disc a{color:var(--gold2)}
+.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:26px}
+@media (max-width:520px){body{font-size:18px}.qtext{font-size:20px}.qcard{padding:20px 16px}.opt .ctxbtn,.opt .ctx{padding-left:20px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- INÍCIO -->
+<section id="start">
+  <div class="hero">
+    <svg class="rose" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="46" fill="none" stroke="#c9a24a" stroke-width="2"/>
+      <circle cx="50" cy="50" r="38" fill="#5a1a24" stroke="#c9a24a" stroke-width="1"/>
+      <g stroke="#c9a24a" stroke-width="1.2" fill="none">
+        <path d="M50 12 V88 M12 50 H88"/>
+        <circle cx="50" cy="50" r="14"/><circle cx="50" cy="50" r="26"/>
+      </g>
+      <g fill="#1f3a5f" stroke="#c9a24a" stroke-width=".8">
+        <path d="M50 24 L56 38 L44 38Z"/><path d="M50 76 L44 62 L56 62Z"/>
+        <path d="M24 50 L38 44 L38 56Z"/><path d="M76 50 L62 56 L62 44Z"/>
+      </g>
+      <circle cx="50" cy="50" r="6" fill="#e6c97a"/>
+    </svg>
+    <div class="orn cinzel" style="font-size:13px">✠ Teste de doutrina ✠</div>
+    <h1>Santo ou Herege?</h1>
+    <p class="sub">Descubra de quais santos, Doutores da Igreja e hereges históricos você está mais perto, das questões sobre a Trindade às imagens nos altares.</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b>8 eixos</b><span>em 4 ramos da doutrina</span></div>
+    <div class="stat"><b>16 heresias</b><span>dos séculos II ao XVII</span></div>
+    <div class="stat"><b>Dilemas</b><span>baseados em casos reais da história</span></div>
+  </div>
+
+  <div class="orn cinzel" style="font-size:13px">Escolha a versão</div>
+  <div class="versions">
+    <button class="ver rec" data-v="1">
+      <h3>Curta</h3>
+      <div class="meta">16 perguntas · cerca de 6 min</div>
+      <p>Um primeiro retrato da sua teologia: 2 perguntas por eixo, uma afirmação e um dilema.</p>
+    </button>
+    <button class="ver" disabled>
+      <h3>Média</h3>
+      <div class="meta">cerca de 32 perguntas · 12 min</div>
+      <p>Mais eixos (Igreja, Escritura e Tradição, Moral, Maria) e mais dilemas.</p>
+      <span class="soon">em preparação</span>
+    </button>
+    <button class="ver" disabled>
+      <h3>Longa</h3>
+      <div class="meta">cerca de 60 perguntas · 25 min</div>
+      <p>Todas as afirmações e dilemas, para o resultado mais preciso.</p>
+      <span class="soon">em preparação</span>
+    </button>
+  </div>
+
+  <div class="how">
+    <h2>Como funciona</h2>
+    <ul>
+      <li>Cada <b>eixo</b> é uma questão real que dividiu a Igreja. Nas pontas ficam dois erros opostos e, no centro, a fé definida pelos concílios. A ortodoxia quase sempre é uma <i>via média</i> entre dois exageros.</li>
+      <li>Abra o <b>contexto</b> de cada opção antes de escolher: ele apresenta o melhor argumento de cada posição, do jeito que seus defensores a viam.</li>
+      <li>Os nomes das heresias só aparecem no final, junto com a história de cada uma, o concílio que tratou dela e os parágrafos do Catecismo.</li>
+    </ul>
+    <p class="small" style="margin:10px 0 0">É um jogo para estudar e brincar, não um instrumento de avaliação teológica. Nenhuma fogueira será acesa.</p>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz" class="hidden">
+  <div class="topbar">
+    <span class="ramo" id="ramo"></span>
+    <span class="count" id="count"></span>
+  </div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="qcard">
+    <div class="qtype" id="qtype"></div>
+    <div class="qtext" id="qtext"></div>
+    <div class="axislbl" id="axislbl"></div>
+    <div id="opts"></div>
+  </div>
+  <div class="nav">
+    <button class="btn ghost" id="back">← Voltar</button>
+    <button class="btn" id="next" disabled>Próxima →</button>
+  </div>
+</section>
+
+<!-- RESULTADO -->
+<section id="result" class="hidden">
+  <div class="verdict">
+    <div class="orn cinzel" style="font-size:13px">Sentença do tribunal</div>
+    <div class="pct" id="rpct"></div>
+    <div class="small">de ortodoxia</div>
+    <h2 class="gold" id="rtitle"></h2>
+    <p id="rdesc"></p>
+  </div>
+
+  <div class="sect">
+    <h3>Suas afinidades</h3>
+    <div class="figs" id="figs"></div>
+  </div>
+
+  <div class="sect">
+    <h3>Seu perfil, eixo por eixo</h3>
+    <p class="small" style="margin-top:-6px">O marcador mostra onde suas respostas caíram. O centro verde é a fé definida pela Igreja; as pontas, os erros opostos. Abra "Aprofundar" para ver a história de cada posição.</p>
+    <div id="axes"></div>
+  </div>
+
+  <div class="actions">
+    <button class="btn" id="again">Refazer o teste</button>
+    <button class="btn ghost" id="copy">Copiar resultado</button>
+  </div>
+  <p class="disc">Fontes: Catecismo da Igreja Católica (<a href="https://www.vatican.va/archive/cathechism_po/index_new/prima-pagina-cic_po.html">texto integral no vatican.va</a>), decretos dos concílios e obras dos Padres citados.<br>É um jogo de estudo. As afinidades indicam proximidade com posições históricas, não um juízo sobre a fé de ninguém.</p>
+</section>
+
+</div>
+
+<script>
+/* ============ DADOS ============
+   Cada eixo: polo esquerdo (L, -1), centro ortodoxo (C, 0), polo direito (R, +1).
+   Cada pergunta tem "nivel": 1 = curta; 2 = média; 3 = longa (as versões
+   maiores só acrescentam perguntas e eixos). */
+const AXES = [
+ {id:"trindade", ramo:"I · Deus", nome:"A Trindade",
+  L:{tag:"Modalismo", fig:"Sabélio", ini:"S", hist:"Ensinado por Noeto e Práxeas e sistematizado por Sabélio em Roma (c. 215). Sabélio foi excomungado pelo papa Calisto I. Tertuliano ironizou que os modalistas 'crucificaram o Pai' (patripassianismo)."},
+  C:{tag:"Um Deus em três Pessoas", fig:"Santo Atanásio", ini:"A", hist:"Defendido por Santo Atanásio, exilado cinco vezes por isso. Credo niceno-constantinopolitano (325/381). Catecismo §§ 253–256."},
+  R:{tag:"Arianismo", fig:"Ário", ini:"Á", hist:"Ário, presbítero de Alexandria (c. 318), ensinava que 'houve um tempo em que o Filho não existia'. Condenado no Concílio de Niceia (325) e de novo em Constantinopla I (381)."}},
+ {id:"criacao", ramo:"I · Deus", nome:"Criação e matéria",
+  L:{tag:"Gnosticismo / maniqueísmo", fig:"Mani", ini:"M", hist:"Gnósticos do séc. II e Mani (séc. III), que pregava dois princípios eternos, o bem (espírito) e o mal (matéria). A ideia ressurgiu nos cátaros, combatidos no IV Concílio de Latrão (1215). Santo Irineu a refutou em Contra as Heresias (c. 180)."},
+  C:{tag:"Criação boa, distinta de Deus", fig:"Santo Irineu", ini:"I", hist:"Santo Irineu de Lyon, declarado Doutor da Igreja em 2022 ('Doutor da unidade'). 'Deus viu que era muito bom' (Gn 1,31). Catecismo §§ 285, 296–299."},
+  R:{tag:"Panteísmo", fig:"Amalrico de Bena", ini:"A", hist:"Amalrico de Bena, mestre em Paris, ensinava que tudo é Deus; condenado postumamente em Paris (1210). O Concílio Vaticano I (Dei Filius, 1870) condenou o panteísmo de forma explícita."}},
+ {id:"humanidade", ramo:"II · Cristo", nome:"Verdadeiro Deus e verdadeiro homem",
+  L:{tag:"Docetismo", fig:"Marcião", ini:"M", hist:"Do grego dokein, 'parecer'. Já combatido em 1Jo 4,2-3 e nas cartas de Santo Inácio de Antioquia (c. 110). Adotado por Marcião e por várias escolas gnósticas."},
+  C:{tag:"Encarnação real", fig:"Santo Inácio de Antioquia", ini:"I", hist:"Santo Inácio, bispo e mártir (c. 110): 'Ele nasceu verdadeiramente, comeu e bebeu verdadeiramente, foi verdadeiramente perseguido'. Catecismo §§ 464–465, 470."},
+  R:{tag:"Adocionismo", fig:"Paulo de Samósata", ini:"P", hist:"Paulo de Samósata, bispo de Antioquia, deposto por um sínodo em 268. Reapareceu na Espanha com Elipando de Toledo, condenado no Sínodo de Frankfurt (794)."}},
+ {id:"uniao", ramo:"II · Cristo", nome:"Uma Pessoa, duas naturezas",
+  L:{tag:"Nestorianismo", fig:"Nestório", ini:"N", hist:"Nestório, patriarca de Constantinopla, recusava o título Theotokos. Condenado no Concílio de Éfeso (431), sob a liderança de São Cirilo de Alexandria."},
+  C:{tag:"União hipostática", fig:"São Leão Magno", ini:"L", hist:"O Tomo do papa São Leão Magno foi aclamado em Calcedônia (451): 'Pedro falou por Leão!'. Catecismo §§ 466–469, 495."},
+  R:{tag:"Monofisismo", fig:"Eutiques", ini:"E", hist:"Eutiques, arquimandrita de Constantinopla, ensinava que a humanidade de Cristo foi absorvida pela divindade. Condenado no Concílio de Calcedônia (451)."}},
+ {id:"graca", ramo:"III · Graça e salvação", nome:"Graça e liberdade",
+  L:{tag:"Pelagianismo", fig:"Pelágio", ini:"P", hist:"Pelágio, monge britânico (séc. V). Condenado no Concílio de Cartago (418), decisão confirmada pelo papa Zósimo. Sua forma atenuada, o semipelagianismo, foi rejeitada no Concílio de Orange (529)."},
+  C:{tag:"Graça que liberta a liberdade", fig:"Santo Agostinho", ini:"A", hist:"Santo Agostinho, 'Doutor da Graça'. Concílio de Trento, Decreto sobre a Justificação (1547). Catecismo §§ 1996–2002, 2008."},
+  R:{tag:"Jansenismo / calvinismo", fig:"Jansênio", ini:"J", hist:"Calvino (séc. XVI), rejeitado em Trento (sessão VI, 1547). Cornélio Jansênio (Augustinus, 1640); cinco proposições tiradas de sua obra foram condenadas por Inocêncio X (1653). Antes, Miguel Baio (condenado por Pio V, 1567) ensinava que todas as obras dos infiéis são pecado."}},
+ {id:"destino", ramo:"III · Graça e salvação", nome:"O destino final",
+  L:{tag:"Apocatástase (universalismo)", fig:"Orígenes", ini:"O", hist:"Associada a Orígenes (séc. III), que morreu em comunhão com a Igreja, e sobretudo a seguidores posteriores. Condenada no Sínodo de Constantinopla (543), com anátemas depois ligados ao II Concílio de Constantinopla (553)."},
+  C:{tag:"Inferno possível, ninguém predestinado a ele", fig:"São Francisco de Sales", ini:"F", hist:"Aos 19 anos, em Paris, São Francisco de Sales viveu semanas convencido de que estava condenado. A angústia passou quando rezou o 'Lembrai-vos' diante de uma imagem de Nossa Senhora. Catecismo §§ 1033–1037."},
+  R:{tag:"Dupla predestinação", fig:"Godescalco", ini:"G", hist:"Godescalco de Orbais, monge do séc. IX, condenado no Sínodo de Quierzy (853). A ideia voltou com Calvino; Trento a rejeitou (sessão VI, cânon 17)."}},
+ {id:"eucaristia", ramo:"IV · Sacramentos", nome:"A Eucaristia",
+  L:{tag:"Simbolismo", fig:"Zuínglio", ini:"Z", hist:"Ulrico Zuínglio (Zurique, séc. XVI) e, antes, Berengário de Tours (séc. XI), que acabou se retratando. Concílio de Trento, sessão XIII (1551)."},
+  C:{tag:"Transubstanciação", fig:"Santo Tomás de Aquino", ini:"T", hist:"Santo Tomás de Aquino, autor do ofício de Corpus Christi: Cristo está presente 'à maneira de substância', inteiro em cada parte (Suma Teológica III, q. 76). Catecismo §§ 1373–1377."},
+  R:{tag:"Cafarnaísmo (realismo carnal)", fig:"Os cafarnaítas", ini:"C", hist:"Leitura atribuída aos ouvintes de Cafarnaum que se escandalizaram (Jo 6,52.60-66). A teologia rejeita a ideia de uma presença física, local e divisível: o Cristo glorioso não é partido nem ferido."}},
+ {id:"imagens", ramo:"IV · Sacramentos", nome:"As imagens sagradas",
+  L:{tag:"Iconoclasmo", fig:"Leão III Isáurico", ini:"L", hist:"O imperador Leão III Isáurico (a partir de 726/730) e seu filho Constantino V destruíram ícones. Condenado no II Concílio de Niceia (787); o 'Triunfo da Ortodoxia' (843) celebra a volta dos ícones. A Reforma retomou a ideia em parte."},
+  C:{tag:"Veneração, não adoração", fig:"São João Damasceno", ini:"J", hist:"São João Damasceno: 'Não adoro a matéria; adoro o Criador da matéria, que se fez matéria por mim'. II Concílio de Niceia (787). Catecismo §§ 1159–1162, 2129–2132."},
+  R:{tag:"Superstição", fig:"A superstição", ini:"S", hist:"O Catecismo define superstição como atribuir eficácia à pura materialidade de gestos ou objetos, sem as disposições interiores que eles exigem (§§ 2110–2111)."}}
+];
+
+const QUESTIONS = [
+ // TRINDADE
+ {axis:"trindade", nivel:1, tipo:"Afirmação", q:"Pai, Filho e Espírito Santo: o que são, exatamente?",
+  o:[
+   {p:-1, t:"Três modos, ou 'máscaras', pelos quais o único Deus se mostra: como Pai na criação, como Filho na redenção, como Espírito na Igreja.", c:"Protege ao máximo a unidade de Deus: não há risco de parecer que adoramos três deuses. Os nomes seriam funções, como um homem que é ao mesmo tempo pai, filho e marido."},
+   {p:0, t:"Um só Deus em três Pessoas realmente distintas e iguais em divindade, que se distinguem apenas pelas relações de origem entre elas.", c:"Tenta manter as duas coisas ao mesmo tempo: unidade total da natureza divina e distinção real das Pessoas. O Filho não é o Pai, mas é tudo o que o Pai é, exceto ser Pai."},
+   {p:1, t:"O Pai é o Deus supremo; o Filho é a primeira e mais perfeita criatura, por meio da qual o Pai criou todo o resto.", c:"Explica com uma lógica simples por que Jesus diz 'o Pai é maior do que eu' (Jo 14,28) e reza ao Pai. Preserva a ideia de que só há um Deus sem origem."}
+  ]},
+ {axis:"trindade", nivel:1, tipo:"Dilema · Niceia, 325", q:"Você é bispo e precisa votar. A palavra em disputa é homoousios: o Filho é 'da mesma substância' do Pai. Ela não aparece na Bíblia. Como você vota?",
+  o:[
+   {p:0, t:"A favor. A palavra não está na Bíblia, mas diz exatamente o que a Bíblia ensina: 'Eu e o Pai somos um' (Jo 10,30).", c:"Às vezes uma palavra técnica nova é necessária para fechar a porta a uma interpretação errada da Escritura, já que os dois lados citavam os mesmos versículos."},
+   {p:1, t:"Contra. Prefiro dizer só que o Filho é 'semelhante' ao Pai. Melhor ficar com as palavras da Escritura e evitar filosofia.", c:"Era a posição de muitos bispos moderados da época. Soa prudente e bíblica, mas deixa espaço aberto para dizer que o Filho é inferior ao Pai."},
+   {p:-1, t:"A favor, e com entusiasmo: se o Filho tem a mesma substância, então Pai e Filho são, no fundo, a mesma Pessoa com nomes diferentes.", c:"Era exatamente o que os adversários de Niceia temiam: que o termo apagasse a distinção entre as Pessoas. Marcelo de Ancira foi acusado de seguir por esse caminho."}
+  ]},
+ // CRIAÇÃO
+ {axis:"criacao", nivel:1, tipo:"Afirmação", q:"O mundo material (corpo, natureza, sexualidade, comida): o que ele é diante de Deus?",
+  o:[
+   {p:-1, t:"Uma prisão. O espírito é bom, e a matéria é obra de um poder inferior; salvar-se é escapar do corpo.", c:"Explica de forma simples de onde vêm o mal e o sofrimento: da matéria, não do Deus bom. Atraiu muitos ascetas sinceros."},
+   {p:0, t:"Uma criação boa, feita livremente por Deus a partir do nada e distinta d'Ele; ferida pelo pecado, mas destinada à redenção, inclusive o corpo.", c:"Afirma ao mesmo tempo a bondade da criação e sua distinção total em relação ao Criador. Por isso a Igreja crê na ressurreição da carne, não só na sobrevivência da alma."},
+   {p:1, t:"Uma manifestação do próprio Deus. Deus e a natureza são, no fundo, a mesma realidade.", c:"Dá um sentido sagrado a tudo o que existe e elimina a distância entre Deus e o mundo. Atrai muitos que buscam uma espiritualidade ligada à natureza."}
+  ]},
+ {axis:"criacao", nivel:1, tipo:"Dilema · Na paróquia", q:"Um grupo propõe um retiro ensinando que o corpo é 'o túmulo da alma' e que os mais espirituais devem, por princípio, abster-se do casamento e da carne, porque são coisas impuras. Qual sua reação?",
+  o:[
+   {p:1, t:"Prefiro outro retiro: imersão na natureza, para me reconectar com o divino que está em todas as coisas.", c:"Reage ao desprezo pela matéria indo ao extremo oposto: o mundo deixa de ser criatura e passa a ser divino."},
+   {p:-1, t:"Participo. Quanto mais longe da matéria, mais perto de Deus.", c:"Parece a radicalidade dos santos penitentes. Os cátaros medievais seguiam exatamente esse caminho, e seus 'perfeitos' recusavam casamento, carne, ovos e leite."},
+   {p:0, t:"Jejum e celibato são bons como oferta livre; proibi-los porque a matéria seria impura é outra coisa. São Paulo chama isso de 'doutrina de demônios' (1Tm 4,1-4).", c:"Distingue ascese (renunciar a um bem por um bem maior) de dualismo (renunciar porque a coisa seria má em si)."}
+  ]},
+ // HUMANIDADE DE CRISTO
+ {axis:"humanidade", nivel:1, tipo:"Afirmação", q:"Quando Jesus chorou diante do túmulo de Lázaro (Jo 11,35), o que aconteceu?",
+  o:[
+   {p:-1, t:"Foi uma aparência. Deus não pode realmente sofrer nem chorar; o corpo de Cristo era como uma visão, para nos ensinar.", c:"Protege a dignidade divina: parece indigno que Deus sinta fome, sono ou medo. Muitos cristãos dos primeiros séculos pensavam assim."},
+   {p:1, t:"Chorou como qualquer homem, porque era um homem: o melhor de todos, tão unido a Deus que foi adotado como Filho no batismo do Jordão.", c:"Valoriza a humanidade de Jesus e o apresenta como modelo ao nosso alcance. Lê ao pé da letra a voz do batismo: 'Tu és meu Filho'."},
+   {p:0, t:"Chorou de verdade, com lágrimas humanas. O Filho eterno de Deus assumiu uma natureza humana completa, com corpo, alma e emoções.", c:"'O que não foi assumido não foi salvo' (São Gregório Nazianzeno): se Cristo não assumiu de verdade a humanidade, também não a redimiu."}
+  ]},
+ {axis:"humanidade", nivel:1, tipo:"Dilema · Antioquia, c. 110", q:"O bispo Inácio está sendo levado a Roma para morrer nas feras. Um grupo de cristãos diz que Cristo não sofreu de verdade na cruz. O que você responderia a eles?",
+  o:[
+   {p:0, t:"Que, se Cristo só pareceu sofrer, o martírio de Inácio também seria uma farsa sem sentido. Ele nasceu, comeu, sofreu e ressuscitou de verdade.", c:"É o argumento das próprias cartas de Inácio. A fé na carne real de Cristo sustenta a fé na Eucaristia e na ressurreição."},
+   {p:-1, t:"Que eles têm razão: o Cristo divino deixou o corpo antes da cruz; quem sofreu foi só a aparência, ou até outra pessoa.", c:"Versões assim aparecem em textos gnósticos. Alguns diziam que Simão de Cirene foi crucificado no lugar de Jesus."},
+   {p:1, t:"Que Jesus sofreu de verdade porque era apenas um homem justo, sobre quem o poder de Deus desceu no batismo e de quem se retirou na cruz.", c:"Une humanidade real à negação da divindade pessoal: a força divina teria 'habitado' Jesus por um tempo. Cerinto ensinava algo assim."}
+  ]},
+ // UNIÃO
+ {axis:"uniao", nivel:1, tipo:"Afirmação", q:"Maria pode ser chamada de 'Mãe de Deus' (Theotokos)?",
+  o:[
+   {p:-1, t:"Melhor não. Ela é mãe de Cristo, o homem Jesus unido ao Verbo. Deus não nasce de uma mulher.", c:"Parece evitar um exagero: Maria não gerou a divindade eterna. Foi proposto por um patriarca piedoso e respeitado, preocupado com a precisão."},
+   {p:0, t:"Sim. Ela não gerou a natureza divina, mas gerou uma Pessoa, e essa Pessoa é o Filho de Deus. Quem nasceu dela é Deus.", c:"Uma mãe é mãe da pessoa, não de uma 'natureza'. Se Jesus é uma só Pessoa, e essa Pessoa é divina, Maria é verdadeiramente Mãe de Deus."},
+   {p:1, t:"Sim, por uma razão simples: em Cristo a humanidade foi absorvida pela divindade, como uma gota de mel no oceano. Depois da união, só resta a natureza divina.", c:"Afirma com força a unidade de Cristo, mas ao preço de engolir sua humanidade. A imagem da gota no oceano era usada pelos defensores dessa posição."}
+  ]},
+ {axis:"uniao", nivel:1, tipo:"Dilema · Calcedônia, 451", q:"A carta do papa Leão é lida no concílio e os bispos aclamam: 'Pedro falou por Leão!'. Para você, o que a carta deveria dizer sobre Cristo?",
+  o:[
+   {p:1, t:"Que Nele há uma única natureza divino-humana, misturada e nova: nem só Deus, nem só homem.", c:"Tenta uma síntese, como o bronze feito de cobre e estanho. Mas aí Cristo não seria nem verdadeiro Deus nem verdadeiro homem."},
+   {p:-1, t:"Que há duas naturezas e também dois sujeitos: o Verbo eterno age nos milagres, e o homem Jesus age no sofrimento.", c:"Parece explicar bem os Evangelhos, onde Jesus às vezes age como Deus e às vezes como homem. Mas faz de Cristo uma dupla."},
+   {p:0, t:"Que há duas naturezas, divina e humana, sem confusão nem mudança, sem divisão nem separação, numa só Pessoa.", c:"Os quatro advérbios de Calcedônia fecham ao mesmo tempo a porta da mistura e a da divisão."}
+  ]},
+ // GRAÇA
+ {axis:"graca", nivel:1, tipo:"Afirmação", q:"Para fazer o bem e chegar a Deus, o que é preciso?",
+  o:[
+   {p:1, t:"Só a graça. Depois do pecado original, a vontade está tão corrompida que não coopera em nada; quem recebe a graça eficaz não consegue resistir a ela.", c:"Dá toda a glória a Deus e leva a sério a gravidade do pecado. Foi defendido, com diferenças entre si, por reformadores protestantes e por um movimento rigorista dentro da própria Igreja."},
+   {p:0, t:"A graça é necessária desde o início, até para querer o bem. Mas ela não anula a liberdade: Deus move, e o homem coopera livremente.", c:"'Aquele que te criou sem ti não te salvará sem ti' (Santo Agostinho, Sermão 169). Graça primeiro, liberdade real."},
+   {p:-1, t:"Esforço e boa vontade. Deus nos deu uma natureza capaz; a graça ajuda, como um bom exemplo, mas não é estritamente necessária.", c:"Defende a responsabilidade moral: se Deus manda, é porque podemos cumprir. Quem a propôs foi um monge austero, escandalizado com a moral frouxa dos cristãos de Roma."}
+  ]},
+ {axis:"graca", nivel:1, tipo:"Dilema · Duas opiniões", q:"Um colega ateu, honesto e generoso, diz: 'Para ser salvo basta ser boa pessoa.' Um conhecido muito religioso responde: 'Sem a fé, até as virtudes dele são pecados.' Com quem você concorda?",
+  o:[
+   {p:-1, t:"Com o primeiro: viver honestamente já basta, por si só.", c:"Reconhece o valor real da bondade humana. Mas torna Cristo e a graça, no fundo, dispensáveis."},
+   {p:0, t:"Com nenhum dos dois. Ninguém se salva só pelas próprias forças, mas uma boa ação natural não é pecado, e Deus pode agir com sua graça em quem busca a verdade com sinceridade.", c:"O Catecismo (§ 847) fala da salvação possível de quem, sem culpa, não conhece Cristo, mas busca a Deus sinceramente movido pela graça."},
+   {p:1, t:"Com o segundo: sem a graça, as virtudes dos pagãos são apenas vícios disfarçados.", c:"Leva ao extremo a frase 'tudo o que não procede da fé é pecado' (Rm 14,23). A proposição 'todas as obras dos infiéis são pecados' foi condenada em 1567."}
+  ]},
+ // DESTINO
+ {axis:"destino", nivel:1, tipo:"Afirmação", q:"Sobre o inferno, o que você pensa?",
+  o:[
+   {p:0, t:"É uma possibilidade real: a autoexclusão definitiva de quem recusa livremente o amor de Deus até o fim. Deus quer que todos se salvem e não predestina ninguém para lá.", c:"Leva a sério ao mesmo tempo o amor de Deus, que 'quer que todos sejam salvos' (1Tm 2,4), e a liberdade humana, que pode dizer não."},
+   {p:-1, t:"Pode até existir como purificação temporária, mas no fim todos, até os demônios, serão restaurados e salvos.", c:"Parece a vitória total do amor de Deus: 'Deus será tudo em todos' (1Cor 15,28). Foi defendido por alguns autores antigos de grande prestígio."},
+   {p:1, t:"É o destino que Deus decretou, desde a eternidade, para os não eleitos, para manifestar sua justiça.", c:"Parece respeitar a soberania absoluta de Deus: Ele decide tudo, inclusive quem se perde."}
+  ]},
+ {axis:"destino", nivel:1, tipo:"Dilema · Um estudante em pânico", q:"Um jovem estudante de teologia está angustiado há semanas: 'E se Deus já decidiu que eu vou para o inferno?' O que você diz a ele?",
+  o:[
+   {p:1, t:"Que, se for assim, nada pode mudar o decreto; resta aceitá-lo e procurar na própria vida sinais de que se é eleito.", c:"É coerente com a ideia de um decreto eterno e imutável. Historicamente, levou a uma ansiedade constante por 'sinais de eleição'."},
+   {p:0, t:"Que Deus não predestina ninguém ao mal. Que confie, reze e se entregue ao amor d'Ele, que quer a sua salvação.", c:"Um jovem estudante em Paris passou exatamente por essa crise, no séc. XVI. Saiu dela rezando diante de uma imagem de Nossa Senhora e tornou-se depois bispo, santo e Doutor da Igreja."},
+   {p:-1, t:"Que pode ficar tranquilo: no fim todo mundo se salva, então não há com o que se preocupar.", c:"Alivia a angústia imediatamente. Mas tira o peso das escolhas livres e da conversão."}
+  ]},
+ // EUCARISTIA
+ {axis:"eucaristia", nivel:1, tipo:"Afirmação", q:"Depois da consagração, o que está sobre o altar?",
+  o:[
+   {p:-1, t:"Pão e vinho, que simbolizam o Corpo e o Sangue de Cristo e nos fazem lembrar d'Ele. Cristo está presente na fé da comunidade.", c:"Lê 'isto é o meu corpo' como 'isto significa', assim como em 'eu sou a porta'. Evita qualquer suspeita de magia ou idolatria."},
+   {p:1, t:"A carne física de Jesus, em sentido material: ao mastigar a hóstia, mordemos e partimos o corpo d'Ele, como quem come carne.", c:"Leva o realismo tão a sério que imagina uma presença física, local e divisível. Esse era o escândalo dos ouvintes: 'Como pode este dar-nos a sua carne a comer?' (Jo 6,52)."},
+   {p:0, t:"O Corpo, o Sangue, a Alma e a Divindade de Cristo, de modo verdadeiro, real e substancial. A substância do pão e do vinho mudou; ficam só as aparências.", c:"Toma o 'isto é' ao pé da letra, mas explica que Cristo está presente como substância, não como um corpo físico em pedaços."}
+  ]},
+ {axis:"eucaristia", nivel:1, tipo:"Dilema · Durante a Missa", q:"Na hora da comunhão, um fragmento da hóstia consagrada cai no chão. O que você pensa?",
+  o:[
+   {p:0, t:"Que é preciso recolhê-lo com reverência: Cristo está presente por inteiro em cada fragmento, enquanto houver aparência de pão.", c:"O Concílio de Trento ensina que Cristo está todo inteiro em cada uma das espécies e em cada uma de suas partes (Catecismo § 1377)."},
+   {p:1, t:"Que é gravíssimo, porque um pedaço do corpo de Cristo foi arrancado e Ele fica, de algum modo, ferido e incompleto.", c:"Expressa grande devoção, mas leva o realismo a uma conclusão absurda: o Cristo glorioso não pode ser ferido nem dividido."},
+   {p:-1, t:"Que não é tão grave: o fragmento é só pão, e o importante é o que ele significa.", c:"Evita escrúpulos e superstições. Mas, se for verdade, a reverência dos séculos diante do Santíssimo teria sido um engano."}
+  ]},
+ // IMAGENS
+ {axis:"imagens", nivel:1, tipo:"Afirmação", q:"Imagens de Cristo, de Maria e dos santos nas igrejas são…",
+  o:[
+   {p:1, t:"…poderosas em si mesmas: certas imagens têm força própria, e quanto mais velas e imagens, mais garantida fica a graça pedida.", c:"Expressa uma fé intensa e concreta, comum na religiosidade popular. Mas coloca o poder no objeto, e não em Deus."},
+   {p:0, t:"…legítimas: desde que Deus se tornou visível em Cristo, Ele pode ser representado. A honra dada à imagem passa para quem ela representa; adoração, só a Deus.", c:"'Não adoro a matéria; adoro o Criador da matéria, que se fez matéria por mim', escreveu um monge sírio do séc. VIII."},
+   {p:-1, t:"…um perigo. Deus proibiu as imagens (Ex 20,4); o culto deve ser só em espírito.", c:"Leva a sério o mandamento e o risco real da idolatria. Já foi política oficial de imperadores cristãos."}
+  ]},
+ {axis:"imagens", nivel:1, tipo:"Dilema · Na vizinhança", q:"Uma vizinha protestante diz que ajoelhar diante de uma imagem de Nossa Senhora é idolatria. Sua tia jura que deixar Santo Antônio de cabeça para baixo 'obriga' o santo a arrumar casamento. O que você pensa?",
+  o:[
+   {p:-1, t:"Que a vizinha tem razão: o melhor seria tirar as imagens e evitar confusão.", c:"Resolve o problema da superstição cortando pela raiz. Mas, junto, vão embora séculos de arte e catequese visual."},
+   {p:1, t:"Que a tia sabe das coisas: simpatias com imagens funcionam, e a tradição popular não erra.", c:"Valoriza a fé simples do povo. Mas trata o santo como alguém que pode ser 'obrigado' por um gesto, o que é magia, não oração."},
+   {p:0, t:"Que as duas estão erradas, em sentidos opostos: venerar não é adorar, e nenhuma imagem 'obriga' um santo. O valor está em quem ela representa.", c:"Distingue o culto de veneração (dulia), dado aos santos, do culto de adoração (latria), devido só a Deus, e ambos da superstição."}
+  ]}
+];
+
+/* ============ LÓGICA ============ */
+const $ = s => document.querySelector(s);
+const axisById = Object.fromEntries(AXES.map(a=>[a.id,a]));
+let qs = [], answers = [], idx = 0;
+
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function show(id){ ["start","quiz","result"].forEach(s=>$("#"+s).classList.toggle("hidden",s!==id)); window.scrollTo(0,0); }
+
+document.querySelectorAll(".ver[data-v]").forEach(b=>b.onclick=()=>start(+b.dataset.v));
+
+function start(level){
+  qs = QUESTIONS.filter(q=>q.nivel<=level).map(q=>({...q, o:shuffle(q.o)}));
+  answers = new Array(qs.length).fill(null);
+  idx = 0; show("quiz"); render();
+}
+
+function render(){
+  const q = qs[idx], ax = axisById[q.axis];
+  $("#ramo").textContent = ax.ramo;
+  $("#count").textContent = `${idx+1} de ${qs.length}`;
+  $("#prog").style.width = (idx/qs.length*100)+"%";
+  $("#qtype").textContent = q.tipo;
+  $("#qtext").textContent = q.q;
+  $("#axislbl").textContent = "Eixo: " + ax.nome;
+  const box = $("#opts"); box.innerHTML = "";
+  q.o.forEach((o,i)=>{
+    const d = document.createElement("div");
+    d.className = "opt" + (answers[idx]===i?" sel":"");
+    d.innerHTML = `<button class="main"><span class="dot"></span><span></span></button>
+      <button class="ctxbtn">▸ ver contexto</button><div class="ctx hidden"></div>`;
+    d.querySelector(".main span:last-child").textContent = o.t;
+    d.querySelector(".ctx").textContent = o.c;
+    d.querySelector(".main").onclick = ()=>{ answers[idx]=i; render(); };
+    const cb = d.querySelector(".ctxbtn"), cx = d.querySelector(".ctx");
+    cb.onclick = ()=>{ const h = cx.classList.toggle("hidden"); cb.textContent = h?"▸ ver contexto":"▾ ocultar contexto"; };
+    box.appendChild(d);
+  });
+  $("#back").disabled = false;
+  $("#next").disabled = answers[idx]===null;
+  $("#next").textContent = idx===qs.length-1 ? "Ver resultado ✠" : "Próxima →";
+}
+
+$("#back").onclick = ()=>{ if(idx===0){ show("start"); } else { idx--; render(); } };
+$("#next").onclick = ()=>{ if(answers[idx]===null) return; if(idx<qs.length-1){ idx++; render(); window.scrollTo(0,0);} else results(); };
+
+const VERDICTS = [
+ {min:1,    t:"Novo venerável Doutor da Santa Igreja", d:"Ortodoxia impecável. Atanásio pediria seu conselho e Tomás de Aquino citaria você na Suma. Prepare-se para o processo de canonização."},
+ {min:.8,   t:"Catequista de confiança", d:"Quase tudo em ordem. Um ou outro deslize, do tipo que um bom confessor resolve em cinco minutos."},
+ {min:.6,   t:"Seu nome foi anotado pelo Santo Ofício", d:"Nada grave ainda, mas um inquisidor atento já abriu uma pasta com o seu nome. Convém reler o Catecismo."},
+ {min:.35,  t:"Inaugure sua igreja e aproveite a renúncia fiscal", d:"Você já tem doutrina própria suficiente para fundar uma denominação. Só falta o CNPJ."},
+ {min:0,    t:"Caminho para a santa fogueira assegurado", d:"Você reuniu condenações de vários concílios. Calma: é só um jogo, e a fogueira está fora de uso há séculos. Abra os 'Aprofundar' abaixo e comece a sua penitência intelectual."}
+];
+
+function results(){
+  const tally = {}; // axis -> {L,C,R,n,sum}
+  AXES.forEach(a=>tally[a.id]={L:0,C:0,R:0,n:0,sum:0});
+  let orth = 0;
+  qs.forEach((q,i)=>{
+    const p = q.o[answers[i]].p, t = tally[q.axis];
+    t.n++; t.sum += p; t[p<0?"L":p>0?"R":"C"]++; if(p===0) orth++;
+  });
+  const ratio = orth/qs.length, pct = Math.round(ratio*100);
+  const v = VERDICTS.find(v=>ratio>=v.min-1e-9);
+  $("#rpct").textContent = pct+"%";
+  $("#rtitle").textContent = v.t;
+  $("#rdesc").textContent = v.d;
+
+  // afinidades
+  const figs = [];
+  AXES.forEach(a=>{ const t=tally[a.id]; if(!t.n) return;
+    ["L","C","R"].forEach(k=>{ const val=Math.round(t[k]/t.n*100); if(val>0) figs.push({...a[k], val, saint:k==="C", ax:a.nome}); });
+  });
+  figs.sort((a,b)=> b.val-a.val || (a.saint===b.saint?0:a.saint?1:-1));
+  const top = figs.slice(0,8);
+  $("#figs").innerHTML = "";
+  top.forEach(f=>{
+    const el=document.createElement("div"); el.className="fig";
+    el.innerHTML=`<div class="medal ${f.saint?"saint":"her"}"></div><div><b></b><span></span></div><div class="fp"></div>`;
+    el.querySelector(".medal").textContent=f.ini;
+    el.querySelector("b").textContent=f.fig;
+    el.querySelector("span").textContent=(f.saint?"✠ ":"")+f.tag;
+    el.querySelector(".fp").textContent=f.val+"%";
+    $("#figs").appendChild(el);
+  });
+
+  // eixos
+  const box = $("#axes"); box.innerHTML="";
+  AXES.forEach(a=>{ const t=tally[a.id]; if(!t.n) return;
+    const pos = 50 + (t.sum/t.n)*46;
+    const el=document.createElement("div"); el.className="axisres";
+    el.innerHTML=`<div class="rm"></div><h4></h4>
+      <div class="spec"><span class="ctr"></span><span class="mk" style="left:50%"></span></div>
+      <div class="ends"><div class="l"></div><div class="c"></div><div class="r"></div></div>
+      <details><summary>Aprofundar</summary>
+        <div class="pole"><b class="lt"></b> <span class="lh"></span></div>
+        <div class="pole ok"><b class="ct"></b> <span class="ch"></span></div>
+        <div class="pole"><b class="rt"></b> <span class="rh"></span></div>
+      </details>`;
+    el.querySelector(".rm").textContent=a.ramo;
+    el.querySelector("h4").textContent=a.nome;
+    el.querySelector(".ends .l").textContent=a.L.tag;
+    el.querySelector(".ends .c").textContent="✠ "+a.C.tag;
+    el.querySelector(".ends .r").textContent=a.R.tag;
+    el.querySelector(".lt").textContent=a.L.tag+" ("+a.L.fig+").";
+    el.querySelector(".lh").textContent=a.L.hist;
+    el.querySelector(".ct").textContent="✠ "+a.C.tag+" ("+a.C.fig+").";
+    el.querySelector(".ch").textContent=a.C.hist;
+    el.querySelector(".rt").textContent=a.R.tag+" ("+a.R.fig+").";
+    el.querySelector(".rh").textContent=a.R.hist;
+    box.appendChild(el);
+    requestAnimationFrame(()=>setTimeout(()=>el.querySelector(".mk").style.left=pos+"%",80));
+  });
+
+  window._summary = `Santo ou Herege? — ${pct}% de ortodoxia: "${v.t}". Afinidades: ` + top.slice(0,4).map(f=>`${f.fig} ${f.val}%`).join(", ");
+  show("result");
+}
+
+$("#again").onclick = ()=>show("start");
+$("#copy").onclick = async ()=>{
+  try{ await navigator.clipboard.writeText(window._summary); $("#copy").textContent="Copiado ✓"; }
+  catch(e){ $("#copy").textContent="Não foi possível copiar"; }
+  setTimeout(()=>$("#copy").textContent="Copiar resultado",2000);
+};
+</script>
+</body>
+</html>
