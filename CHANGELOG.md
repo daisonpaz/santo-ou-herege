@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.0] — 2026-11-13
+
+### Adicionado
+- Versão média ativada: 32 perguntas, 12 eixos, 6 ramos.
+- Ramo V · Igreja: eixos "Escritura e Tradição" (Sola Scriptura ↔ tradição secreta gnóstica) e "Autoridade na Igreja" (conciliarismo ↔ papolatria).
+- Ramo VI · Vida cristã: eixos "Lei, consciência e misericórdia" (rigorismo ↔ laxismo) e "Maria" (negação dos privilégios ↔ coliridianismo).
+- Uma pergunta nova em cada um dos 8 eixos da versão curta (Espírito Santo, ressurreição da carne, concepção virginal, monotelismo, início da conversão, velório, sacrifício da Missa, relíquias).
+
+### Alterado
+- As perguntas passam a ser apresentadas na ordem dos eixos em `AXES`, independentemente da posição em `QUESTIONS`.
+- Selo "Recomendada" passou para a versão média; contadores da tela inicial atualizados.
+
 ## [0.2.0] — 2026-11-12
 
 ### Adicionado

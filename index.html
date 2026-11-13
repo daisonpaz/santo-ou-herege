@@ -150,28 +150,27 @@ summary{cursor:pointer;color:var(--wine2);font-style:italic;font-size:16px}
   </div>
 
   <div class="stats">
-    <div class="stat"><b>8 eixos</b><span>em 4 ramos da doutrina</span></div>
-    <div class="stat"><b>16 heresias</b><span>dos séculos II ao XVII</span></div>
+    <div class="stat"><b>12 eixos</b><span>em 6 ramos da doutrina</span></div>
+    <div class="stat"><b>24 erros</b><span>heresias e exageros dos séculos II ao XIX</span></div>
     <div class="stat"><b>Dilemas</b><span>baseados em casos reais da história</span></div>
   </div>
 
   <div class="orn cinzel" style="font-size:13px">Escolha a versão</div>
   <div class="versions">
-    <button class="ver rec" data-v="1">
+    <button class="ver" data-v="1">
       <h3>Curta</h3>
-      <div class="meta">16 perguntas · cerca de 6 min</div>
+      <div class="meta">16 perguntas · cerca de 6 min · 8 eixos</div>
       <p>Um primeiro retrato da sua teologia: 2 perguntas por eixo, uma afirmação e um dilema.</p>
     </button>
-    <button class="ver" disabled>
+    <button class="ver rec" data-v="2">
       <h3>Média</h3>
-      <div class="meta">cerca de 32 perguntas · 12 min</div>
-      <p>Mais eixos (Igreja, Escritura e Tradição, Moral, Maria) e mais dilemas.</p>
-      <span class="soon">em preparação</span>
+      <div class="meta">32 perguntas · cerca de 12 min · 12 eixos</div>
+      <p>O perfil completo: acrescenta Escritura e Tradição, autoridade na Igreja, moral e Maria, além de mais dilemas.</p>
     </button>
     <button class="ver" disabled>
       <h3>Longa</h3>
       <div class="meta">cerca de 60 perguntas · 25 min</div>
-      <p>Todas as afirmações e dilemas, para o resultado mais preciso.</p>
+      <p>Todas as afirmações e dilemas, com novos eixos, para o resultado mais preciso.</p>
       <span class="soon">em preparação</span>
     </button>
   </div>
@@ -274,6 +273,24 @@ const AXES = [
   L:{tag:"Iconoclasmo", fig:"Leão III Isáurico", ini:"L", hist:"O imperador Leão III Isáurico (a partir de 726/730) e seu filho Constantino V destruíram ícones. Condenado no II Concílio de Niceia (787); o 'Triunfo da Ortodoxia' (843) celebra a volta dos ícones. A Reforma retomou a ideia em parte."},
   C:{tag:"Veneração, não adoração", fig:"São João Damasceno", ini:"J", hist:"São João Damasceno: 'Não adoro a matéria; adoro o Criador da matéria, que se fez matéria por mim'. II Concílio de Niceia (787). Catecismo §§ 1159–1162, 2129–2132."},
   R:{tag:"Superstição", fig:"A superstição", ini:"S", hist:"O Catecismo define superstição como atribuir eficácia à pura materialidade de gestos ou objetos, sem as disposições interiores que eles exigem (§§ 2110–2111)."}}
+ ,
+ // ===== Eixos da versão média (aparecem a partir do nível 2) =====
+ {id:"escritura", ramo:"V · Igreja", nome:"Escritura e Tradição",
+  L:{tag:"Sola Scriptura", fig:"Lutero", ini:"L", hist:"Princípio da Reforma protestante (Martinho Lutero, séc. XVI): só a Bíblia é regra de fé. O Concílio de Trento (sessão IV, 1546) afirmou que o Evangelho chega a nós pelos livros escritos e pelas tradições não escritas recebidas dos apóstolos."},
+  C:{tag:"Escritura, Tradição e Magistério", fig:"São Vicente de Lérins", ini:"V", hist:"São Vicente de Lérins (434): crer 'no que foi crido em toda parte, sempre e por todos'. Concílio Vaticano II, Dei Verbum 9–10: Escritura e Tradição formam um só depósito da fé, e o Magistério não está acima da Palavra de Deus, mas a serve. Catecismo §§ 80–86, 95."},
+  R:{tag:"Tradição secreta (gnose)", fig:"Valentim", ini:"V", hist:"Valentim e outros mestres gnósticos do séc. II diziam guardar um ensinamento oral secreto dos apóstolos, superior aos Evangelhos. Santo Irineu respondeu que a tradição apostólica é pública e se verifica pela sucessão dos bispos em todas as Igrejas, a começar pela de Roma (Contra as Heresias III, 3)."}},
+ {id:"autoridade", ramo:"V · Igreja", nome:"Autoridade na Igreja",
+  L:{tag:"Conciliarismo", fig:"Basileia (1431)", ini:"B", hist:"Teoria de que o concílio está acima do papa, fortalecida durante o Grande Cisma do Ocidente e levada ao extremo pelo Concílio de Basileia (1431), que tentou depor o papa Eugênio IV. Condenada por Pio II na bula Execrabilis (1460). O Vaticano I (Pastor Aeternus, 1870) definiu o primado e a infalibilidade do papa."},
+  C:{tag:"Primado e infalibilidade com limites", fig:"São Roberto Belarmino", ini:"R", hist:"São Roberto Belarmino, Doutor da Igreja, defendeu o primado do papa contra o conciliarismo. O Vaticano I definiu a infalibilidade só para as definições ex cathedra e lembrou que o Espírito Santo não foi prometido aos sucessores de Pedro para revelarem doutrina nova, mas para guardarem a revelação. Catecismo §§ 880–892."},
+  R:{tag:"Papolatria (ultramontanismo extremo)", fig:"W. G. Ward", ini:"W", hist:"Exagero, não uma heresia formalmente condenada: tratar qualquer palavra do papa como infalível. William George Ward, leigo inglês do séc. XIX, ficou famoso por dizer que gostaria de receber uma bula papal nova todo dia de manhã, junto com o jornal. O próprio Vaticano I, ao fixar os limites da infalibilidade, desautorizou essa leitura."}},
+ {id:"moral", ramo:"VI · Vida cristã", nome:"Lei, consciência e misericórdia",
+  L:{tag:"Rigorismo", fig:"Novaciano", ini:"N", hist:"Novaciano, presbítero romano que se fez antipapa (251), negava a reconciliação aos que haviam renegado a fé na perseguição. Mais tarde, o tuciorismo absoluto (sempre a opção mais severa) foi condenado por Alexandre VIII (1690)."},
+  C:{tag:"Prudência e misericórdia", fig:"Santo Afonso de Ligório", ini:"A", hist:"Santo Afonso de Ligório, Doutor da Igreja e padroeiro dos moralistas e confessores, traçou um caminho entre o rigor jansenista e o laxismo. São Cipriano e o papa São Cornélio (251) readmitiram os apóstatas arrependidos depois da penitência. Catecismo §§ 1776–1802, 1846–1848."},
+  R:{tag:"Laxismo", fig:"Caramuel", ini:"C", hist:"Juan Caramuel (séc. XVII), a quem Santo Afonso chamou de 'príncipe dos laxistas', defendia que qualquer opinião minimamente provável bastava para agir. Inocêncio XI condenou 65 proposições laxistas (1679)."}},
+ {id:"maria", ramo:"VI · Vida cristã", nome:"Maria",
+  L:{tag:"Negação dos privilégios marianos", fig:"Helvídio", ini:"H", hist:"Helvídio (Roma, c. 383) negou a virgindade perpétua de Maria, dizendo que ela teve outros filhos com José. São Jerônimo o refutou no tratado Contra Helvídio. A Reforma, em suas correntes mais radicais, retomou a recusa da intercessão de Maria."},
+  C:{tag:"Veneração especial, não adoração", fig:"São Bernardo de Claraval", ini:"B", hist:"São Bernardo de Claraval, o 'Doutor melífluo', grande cantor de Maria, sempre a tratou como criatura e mediadora junto ao Filho. Concílio Vaticano II, Lumen Gentium cap. VIII. Catecismo §§ 487–507, 971: o culto a Maria é especial, mas difere essencialmente da adoração."},
+  R:{tag:"Coliridianismo (mariolatria)", fig:"Coliridianos", ini:"C", hist:"Seita da Arábia, no séc. IV, em que mulheres ofereciam bolos (kollyris) a Maria como sacrifício. Santo Epifânio os refutou (Panarion 79): 'Que Maria seja honrada; o Pai, o Filho e o Espírito Santo sejam adorados.'"}}
 ];
 
 const QUESTIONS = [
@@ -381,6 +398,106 @@ const QUESTIONS = [
    {p:1, t:"Que a tia sabe das coisas: simpatias com imagens funcionam, e a tradição popular não erra.", c:"Valoriza a fé simples do povo. Mas trata o santo como alguém que pode ser 'obrigado' por um gesto, o que é magia, não oração."},
    {p:0, t:"Que as duas estão erradas, em sentidos opostos: venerar não é adorar, e nenhuma imagem 'obriga' um santo. O valor está em quem ela representa.", c:"Distingue o culto de veneração (dulia), dado aos santos, do culto de adoração (latria), devido só a Deus, e ambos da superstição."}
   ]}
+ ,
+ // ===== Perguntas da versão média (nivel 2) =====
+ // Eixos da versão curta: uma pergunta a mais em cada
+ {axis:"trindade", nivel:2, tipo:"Afirmação", q:"E o Espírito Santo, quem é?",
+  o:[
+   {p:-1, t:"O próprio Pai, quando age no coração dos fiéis. 'Espírito' é o nome de Deus agindo dentro de nós.", c:"Simplifica: não precisamos pensar em alguém distinto do Pai. Combina com passagens que falam do 'Espírito de Deus' como sua força ou seu sopro."},
+   {p:0, t:"A terceira Pessoa da Trindade, 'Senhor que dá a vida', adorado e glorificado com o Pai e o Filho.", c:"É a fórmula acrescentada ao Credo em 381. Jesus fala do Espírito como 'outro Paráclito' (Jo 14,16), alguém distinto dele e do Pai, e manda batizar 'em nome do Pai, do Filho e do Espírito Santo'."},
+   {p:1, t:"Uma criatura superior, servidora do Pai e do Filho, como um anjo mais elevado.", c:"Explica por que a Escritura fala menos do Espírito do que do Pai e do Filho e o mostra sendo 'enviado'. Muitos bispos do séc. IV, os 'pneumatômacos', pensavam assim."}
+  ]},
+ {axis:"criacao", nivel:2, tipo:"Afirmação", q:"No fim dos tempos, o que acontece com o corpo?",
+  o:[
+   {p:-1, t:"Nada: fica para trás para sempre. Só a alma, enfim livre, chega a Deus.", c:"Parece mais espiritual: o céu seria pura alma, sem o peso da carne. É a esperança de muitas filosofias antigas."},
+   {p:1, t:"Dissolve-se de volta no Todo divino, assim como a alma; a individualidade termina e tudo volta a ser um.", c:"Promete uma paz total, sem fronteiras entre o eu e Deus. É a esperança de várias espiritualidades orientais e panteístas."},
+   {p:0, t:"Ressuscita: o mesmo corpo, transformado e glorioso, unido de novo à alma.", c:"'Creio na ressurreição da carne', diz o Credo. Se a matéria é boa, Deus não a descarta: a redime. O modelo é o corpo ressuscitado de Cristo, que comia e podia ser tocado (Lc 24,39-43)."}
+  ]},
+ {axis:"humanidade", nivel:2, tipo:"Afirmação", q:"Jesus foi concebido 'por obra do Espírito Santo' e 'nasceu da Virgem Maria'. O que isso quer dizer?",
+  o:[
+   {p:0, t:"Que o Filho eterno recebeu de Maria uma verdadeira carne humana, sem intervenção de pai humano.", c:"Une as duas verdades: a origem divina (sem pai humano) e a humanidade real (recebida de uma mãe). Por isso o Credo nomeia Maria."},
+   {p:1, t:"Que é uma linguagem simbólica: Jesus era filho natural de José e Maria, e o 'Espírito' indica que Deus o escolheu.", c:"Parece mais compatível com a ciência e valoriza um Jesus plenamente humano. Os ebionitas, judeu-cristãos dos primeiros séculos, já pensavam assim."},
+   {p:-1, t:"Que ele passou por Maria 'como a água passa por um cano', sem receber nada dela.", c:"Protege a pureza do Salvador de qualquer contato com a matéria. A imagem do cano era usada por mestres gnósticos do séc. II."}
+  ]},
+ {axis:"uniao", nivel:2, tipo:"Dilema · Getsêmani", q:"'Pai, não a minha vontade, mas a tua' (Lc 22,42). Quantas vontades havia em Cristo?",
+  o:[
+   {p:1, t:"Uma só, a divina. A frase é um ensinamento para nós, não um conflito real dentro dele.", c:"Preserva a unidade perfeita de Cristo: nele não haveria nenhuma tensão. Foi a fórmula de conciliação proposta no séc. VII pelo patriarca Sérgio de Constantinopla."},
+   {p:0, t:"Duas vontades, divina e humana, de uma só Pessoa. A vontade humana, livre, submete-se por amor à divina.", c:"Se Cristo não tivesse vontade humana, sua obediência não seria humana, e não teria nos redimido como homem. Foi o que defendeu São Máximo, o Confessor, até ter a língua e a mão direita cortadas."},
+   {p:-1, t:"Duas vontades e também dois 'eus': o homem Jesus, que tem medo, negocia com o Verbo, que não tem.", c:"Leva muito a sério a angústia real de Jesus. Mas faz da oração no horto um diálogo entre dois sujeitos dentro de Cristo."}
+  ]},
+ {axis:"graca", nivel:2, tipo:"Afirmação", q:"Na conversão, quem dá o primeiro passo?",
+  o:[
+   {p:-1, t:"O homem: ele decide buscar a Deus por conta própria, e a graça vem como resposta a esse começo.", c:"Parece justo: Deus ajuda quem se esforça. Era a posição de monges respeitados do sul da Gália no séc. V, que achavam a doutrina de Agostinho dura demais."},
+   {p:1, t:"Deus, e de modo irresistível: quem é eleito não tem como recusar.", c:"Ninguém pode se gabar de nada, porque tudo é obra de Deus. Mas a liberdade humana desaparece."},
+   {p:0, t:"Deus, com a graça que chama; mas o homem pode acolhê-la ou recusá-la livremente.", c:"'Eis que estou à porta e bato' (Ap 3,20): quem bate é Deus, mas a porta se abre por dentro. O Concílio de Orange (529) afirmou que até o início da fé é dom da graça."}
+  ]},
+ {axis:"destino", nivel:2, tipo:"Dilema · No velório", q:"Num velório, alguém diz: 'Ele nem ia à Missa, mas era boa pessoa; com certeza já está no céu.' Outro responde: 'Viveu longe de Deus; é sinal de que nunca foi dos escolhidos.' O que você pensa?",
+  o:[
+   {p:1, t:"O segundo tem razão: a vida dele só mostrou que Deus não o tinha escolhido.", c:"É coerente com a ideia de que Deus já decidiu quem se salva, e de que a vida de cada um apenas revela esse decreto."},
+   {p:0, t:"Nenhum dos dois pode afirmar isso. A Igreja reza pelos mortos e confia na misericórdia de Deus, sem canonizar nem condenar ninguém por conta própria.", c:"A Igreja declara que alguns estão no céu (os santos), mas nunca declarou de ninguém que está no inferno. Ela reza pelos falecidos porque o julgamento cabe só a Deus (Catecismo §§ 1030–1032)."},
+   {p:-1, t:"O primeiro tem razão: no fim todo mundo se salva, então ele já está no céu.", c:"Consola a família imediatamente. Mas, se todos se salvam de qualquer forma, rezar pelos mortos e se converter perde o sentido."}
+  ]},
+ {axis:"eucaristia", nivel:2, tipo:"Afirmação", q:"A Missa é…",
+  o:[
+   {p:1, t:"…um novo sacrifício a cada celebração: Cristo é imolado de novo e sofre outra vez no altar.", c:"Leva a sério a palavra 'sacrifício' e a seriedade da Missa. Mas contradiz a Escritura: Cristo 'se ofereceu uma vez por todas' (Hb 9,28)."},
+   {p:-1, t:"…uma ceia memorial: recordamos o sacrifício único da cruz, mas nada é oferecido no altar.", c:"Protege a unicidade da cruz: nada pode ser acrescentado a ela. Foi a posição dos reformadores protestantes do séc. XVI."},
+   {p:0, t:"…o mesmo e único sacrifício da cruz, tornado presente de modo incruento, sem sangue; não um novo sacrifício.", c:"É o que ensinou o Concílio de Trento (sessão XXII): a vítima e o sacerdote são os mesmos da cruz, e só muda o modo de oferecer (Catecismo §§ 1366–1367)."}
+  ]},
+ {axis:"imagens", nivel:2, tipo:"Afirmação", q:"E as relíquias dos santos?",
+  o:[
+   {p:-1, t:"São superstição medieval; venerar ossos e roupas é paganismo.", c:"Reage aos abusos reais, como o comércio de relíquias falsas na Idade Média, que escandalizou muita gente honesta."},
+   {p:0, t:"Podem ser veneradas como sinal do corpo que foi templo do Espírito Santo. Deus pode agir por meio delas, mas o poder é d'Ele.", c:"Os lenços que tocaram Paulo curavam doentes (At 19,12), e os cristãos celebravam a Eucaristia sobre os túmulos dos mártires (Catecismo § 1674)."},
+   {p:1, t:"Funcionam por si mesmas: quem toca a relíquia recebe a cura, tenha fé ou não.", c:"Expressa uma confiança concreta e popular no poder dos santos. Mas transforma o objeto em amuleto."}
+  ]},
+ // Eixos novos
+ {axis:"escritura", nivel:2, tipo:"Afirmação", q:"Onde se encontra a Palavra de Deus?",
+  o:[
+   {p:-1, t:"Só na Bíblia. Tudo o que é necessário à salvação está nela com clareza, e cada cristão pode entendê-la por si.", c:"Dá à Escritura um lugar inquestionável e protege contra acréscimos humanos. Foi um dos lemas centrais da Reforma."},
+   {p:0, t:"Na Escritura e na Tradição, que formam juntas um único depósito da fé. O Magistério as interpreta com autoridade, mas não está acima delas: está a serviço delas.", c:"Foi a Igreja, guiada pela Tradição, que reconheceu quais livros fazem parte da Bíblia. E o próprio Paulo manda guardar as tradições recebidas 'por palavra ou por carta' (2Ts 2,15)."},
+   {p:1, t:"Num ensinamento oral reservado a poucos iniciados, mais profundo que a Escritura, que serve apenas para os simples.", c:"Promete um acesso especial aos mistérios, para além do que todos leem. Atraiu muitos cristãos cultos dos primeiros séculos."}
+  ]},
+ {axis:"escritura", nivel:2, tipo:"Dilema · Lyon, c. 180", q:"Um grupo afirma ter recebido dos apóstolos um ensinamento secreto que não está nos Evangelhos. Como saber quem tem a fé verdadeira?",
+  o:[
+   {p:1, t:"Procurando o mestre mais iluminado espiritualmente: ele sabe o que os apóstolos quiseram dizer de verdade.", c:"Valoriza a experiência espiritual e a sabedoria pessoal. Mas cada mestre acaba tendo a sua própria versão."},
+   {p:0, t:"Verificando o que os bispos, sucessores dos apóstolos, ensinam publicamente e de forma igual em todas as Igrejas, a começar pela de Roma.", c:"Era o argumento de um bispo de Lyon da época: se os apóstolos tivessem algo secreto, teriam confiado justamente àqueles a quem entregaram as Igrejas."},
+   {p:-1, t:"Indo direto aos escritos dos apóstolos e lendo-os por conta própria; o que estiver fora deles é invenção.", c:"Parece o caminho mais seguro. Mas, naquela época, a lista dos livros do Novo Testamento ainda nem estava fechada: foi a Tradição que reconheceu quais escritos eram apostólicos."}
+  ]},
+ {axis:"autoridade", nivel:2, tipo:"Afirmação", q:"Qual é a autoridade do Papa?",
+  o:[
+   {p:-1, t:"Ele é um bispo entre outros, com um primado de honra; um concílio está acima dele e pode julgá-lo.", c:"Valoriza a colegialidade e protege a Igreja contra um papa ruim. Ganhou muita força quando três homens disputavam o papado ao mesmo tempo."},
+   {p:1, t:"Tudo o que o Papa diz, em qualquer ocasião (entrevista, homilia, opinião pessoal), é infalível e deve ser aceito como dogma.", c:"Parece a fidelidade máxima ao sucessor de Pedro: não há risco de discordar dele em nada."},
+   {p:0, t:"É o sucessor de Pedro, com autoridade plena sobre toda a Igreja. É infalível só quando define solenemente uma verdade de fé ou de moral, e sempre para guardar a revelação, nunca para criar doutrina nova.", c:"'Tu és Pedro' (Mt 16,18) e 'confirma teus irmãos' (Lc 22,32). O Concílio Vaticano I definiu a infalibilidade e, ao mesmo tempo, os seus limites."}
+  ]},
+ {axis:"autoridade", nivel:2, tipo:"Dilema · Constança, 1415", q:"Três homens dizem ser papa ao mesmo tempo, no Grande Cisma do Ocidente. Um concílio se reúne para resolver a crise. Qual é a lição?",
+  o:[
+   {p:0, t:"Que, numa emergência extraordinária, um concílio pode ajudar a restaurar a unidade; mas a autoridade suprema continua sendo do sucessor de Pedro junto com os bispos, nunca contra ele.", c:"O cisma terminou com a renúncia de Gregório XII e a eleição de Martinho V (1417). Os papas nunca aprovaram a ideia de que o concílio estaria, por princípio, acima deles."},
+   {p:1, t:"Que os fiéis deveriam simplesmente obedecer ao papa de Roma em tudo, sem perguntas, mesmo que ele ordenasse algo contrário à fé.", c:"Valoriza a obediência e a unidade a qualquer custo. Mas a obediência ao papa existe para servir à fé, e não o contrário."},
+   {p:-1, t:"Que o concílio é a autoridade suprema da Igreja e está sempre acima de qualquer papa.", c:"A crise parecia provar isso: só um concílio conseguiu resolver o problema. Um decreto do próprio concílio (Haec Sancta) chegou a afirmar essa superioridade."}
+  ]},
+ {axis:"moral", nivel:2, tipo:"Afirmação", q:"Diante de uma dúvida moral séria (não sei se algo é pecado), o que fazer?",
+  o:[
+   {p:1, t:"Basta encontrar algum autor que diga que é permitido, mesmo com argumentos fracos, e posso agir à vontade.", c:"Alivia consciências angustiadas e evita impor fardos desnecessários. Teve muitos defensores entre os moralistas do séc. XVII."},
+   {p:-1, t:"Sempre escolher a opção mais severa, mesmo quando é muito provável que a outra seja lícita.", c:"Parece a atitude mais segura: assim nunca se corre o risco de pecar. Era a regra dos rigoristas e de muitos jansenistas."},
+   {p:0, t:"Esclarecer a consciência com prudência, oração e o ensino da Igreja. Se a dúvida persiste e há razões sérias a favor da liberdade, posso agir, sem cair em escrúpulos nem em desculpas fáceis.", c:"É o caminho do bispo napolitano que se tornou padroeiro dos confessores: nem o peso que esmaga, nem a frouxidão que engana (Catecismo §§ 1787–1789)."}
+  ]},
+ {axis:"moral", nivel:2, tipo:"Dilema · Cartago, 251", q:"Na perseguição de Décio, muitos cristãos ofereceram incenso aos ídolos para salvar a vida. Agora, arrependidos, pedem para voltar à Igreja. O que fazer?",
+  o:[
+   {p:-1, t:"Não podem voltar. Renegar a fé é imperdoável na Igreja; só Deus poderá julgá-los no fim.", c:"Leva a sério o testemunho dos mártires, que morreram para não fazer o mesmo. Foi a posição de um presbítero romano que chegou a se fazer antipapa."},
+   {p:1, t:"Podem voltar imediatamente, sem penitência: basta pedir. Exigir penitência é falta de misericórdia.", c:"Foi o que fizeram alguns confessores da fé, que distribuíam cartas de perdão a quem pedisse. Mas isso banaliza a apostasia diante dos mártires."},
+   {p:0, t:"Podem voltar, depois de uma penitência proporcional à gravidade do pecado. A Igreja recebeu o poder de perdoar todos os pecados.", c:"Foi a decisão do bispo de Cartago e do papa da época, num sínodo: misericórdia verdadeira, que cura em vez de fingir que nada aconteceu (Jo 20,23)."}
+  ]},
+ {axis:"maria", nivel:2, tipo:"Afirmação", q:"Quem é Maria para o cristão?",
+  o:[
+   {p:0, t:"A Mãe de Deus, concebida sem pecado, sempre virgem e elevada ao céu. É venerada com uma honra especial e intercede por nós, mas é criatura: a adoração é só de Deus.", c:"'Todas as gerações me chamarão bem-aventurada' (Lc 1,48). A Igreja distingue a veneração especial a Maria (hiperdulia) da adoração (latria), devida só a Deus."},
+   {p:-1, t:"Uma boa mulher judia, mãe de Jesus e modelo de fé como qualquer outro cristão; nada de privilégios especiais, nem de pedir sua intercessão.", c:"Evita qualquer risco de colocar Maria no lugar de Cristo e se apoia no que a Bíblia diz explicitamente. Inclui, por exemplo, a ideia de que ela teve outros filhos com José."},
+   {p:1, t:"Uma figura divina, a face feminina de Deus, que merece o mesmo culto de adoração da Trindade.", c:"Dá a Maria a maior honra imaginável e responde ao desejo de um rosto materno de Deus."}
+  ]},
+ {axis:"maria", nivel:2, tipo:"Dilema · Arábia, séc. IV", q:"Um grupo de mulheres oferece bolos a Maria num altar, como sacrifício, e consagra sacerdotisas para o seu culto. O que você pensa?",
+  o:[
+   {p:1, t:"É bonito: quanto mais honra, melhor. Maria merece tudo o que se oferece a Deus.", c:"Parte de um amor sincero a Maria. Mas o sacrifício é o ato próprio de adoração, que só se oferece a Deus."},
+   {p:0, t:"Isso passa dos limites. Sacrifício só se oferece a Deus; Maria é honrada, não adorada.", c:"Um bispo da época resumiu: 'Que Maria seja honrada; o Pai, o Filho e o Espírito Santo sejam adorados.'"},
+   {p:-1, t:"Isso mostra que toda devoção a Maria é perigosa e deveria ser abolida.", c:"Corta o abuso pela raiz. Mas, junto com ele, joga fora o Magnificat, a Ave-Maria e séculos de oração cristã."}
+  ]}
 ];
 
 /* ============ LÓGICA ============ */
@@ -394,7 +511,11 @@ function show(id){ ["start","quiz","result"].forEach(s=>$("#"+s).classList.toggl
 document.querySelectorAll(".ver[data-v]").forEach(b=>b.onclick=()=>start(+b.dataset.v));
 
 function start(level){
-  qs = QUESTIONS.filter(q=>q.nivel<=level).map(q=>({...q, o:shuffle(q.o)}));
+  // a ordem das perguntas segue a ordem dos eixos em AXES (e, dentro do eixo, a ordem em QUESTIONS)
+  const axIdx = Object.fromEntries(AXES.map((a,i)=>[a.id,i]));
+  qs = QUESTIONS.filter(q=>q.nivel<=level)
+    .sort((a,b)=>axIdx[a.axis]-axIdx[b.axis])
+    .map(q=>({...q, o:shuffle(q.o)}));
   answers = new Array(qs.length).fill(null);
   idx = 0; show("quiz"); render();
 }

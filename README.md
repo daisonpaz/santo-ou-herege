@@ -41,20 +41,30 @@ Cada **eixo** é uma controvérsia real. As pontas são dois erros opostos e o c
 
   O título do "Aprofundar" mostra quantas respostas do eixo foram ortodoxas (ex.: "2 de 2 ortodoxas").
 
-## Conteúdo atual (v0.1.0, versão curta)
+## Conteúdo atual (v0.3.0)
 
-| Ramo | Eixo | Polo esquerdo | Centro | Polo direito |
-|---|---|---|---|---|
-| I · Deus | A Trindade | Modalismo | Santo Atanásio | Arianismo |
-| I · Deus | Criação e matéria | Gnosticismo/maniqueísmo | Santo Irineu | Panteísmo |
-| II · Cristo | Verdadeiro Deus e verdadeiro homem | Docetismo | Santo Inácio de Antioquia | Adocionismo |
-| II · Cristo | Uma Pessoa, duas naturezas | Nestorianismo | São Leão Magno | Monofisismo |
-| III · Graça e salvação | Graça e liberdade | Pelagianismo | Santo Agostinho | Jansenismo/calvinismo |
-| III · Graça e salvação | O destino final | Apocatástase | São Francisco de Sales | Dupla predestinação |
-| IV · Sacramentos | A Eucaristia | Simbolismo | Santo Tomás de Aquino | Cafarnaísmo |
-| IV · Sacramentos | As imagens sagradas | Iconoclasmo | São João Damasceno | Superstição |
+| Ramo | Eixo | Polo esquerdo | Centro | Polo direito | Versão |
+|---|---|---|---|---|---|
+| I · Deus | A Trindade | Modalismo | Santo Atanásio | Arianismo | curta |
+| I · Deus | Criação e matéria | Gnosticismo/maniqueísmo | Santo Irineu | Panteísmo | curta |
+| II · Cristo | Verdadeiro Deus e verdadeiro homem | Docetismo | Santo Inácio de Antioquia | Adocionismo | curta |
+| II · Cristo | Uma Pessoa, duas naturezas | Nestorianismo | São Leão Magno | Monofisismo | curta |
+| III · Graça e salvação | Graça e liberdade | Pelagianismo | Santo Agostinho | Jansenismo/calvinismo | curta |
+| III · Graça e salvação | O destino final | Apocatástase | São Francisco de Sales | Dupla predestinação | curta |
+| IV · Sacramentos | A Eucaristia | Simbolismo | Santo Tomás de Aquino | Cafarnaísmo | curta |
+| IV · Sacramentos | As imagens sagradas | Iconoclasmo | São João Damasceno | Superstição | curta |
+| V · Igreja | Escritura e Tradição | Sola Scriptura | São Vicente de Lérins | Tradição secreta (gnose) | média |
+| V · Igreja | Autoridade na Igreja | Conciliarismo | São Roberto Belarmino | Papolatria (ultramontanismo extremo) | média |
+| VI · Vida cristã | Lei, consciência e misericórdia | Rigorismo | Santo Afonso de Ligório | Laxismo | média |
+| VI · Vida cristã | Maria | Negação dos privilégios marianos | São Bernardo de Claraval | Coliridianismo (mariolatria) | média |
 
-São 16 perguntas, 2 por eixo: uma **afirmação** e um **dilema** histórico ou cotidiano.
+| Versão | Perguntas | Eixos | Composição |
+|---|---|---|---|
+| Curta (`nivel:1`) | 16 | 8 | 2 por eixo dos ramos I–IV: uma **afirmação** e um **dilema** |
+| Média (`nivel:2`) | 32 | 12 | as 16 da curta + 1 pergunta a mais em cada eixo dos ramos I–IV + 2 por eixo dos ramos V–VI |
+| Longa (`nivel:3`) | — | — | em preparação |
+
+Nem todos os polos são heresias formalmente condenadas: "Superstição" e "Papolatria" são exageros que a Igreja rejeita, sem condenação conciliar própria. O texto do "Aprofundar" deixa isso claro.
 
 ## Estrutura do código
 
@@ -68,6 +78,7 @@ Tudo fica em um único arquivo, `index.html`, sem dependências além das Google
   - `q`: enunciado
   - `o`: opções `{p, t, c}`, em que `p` é o valor (-1, 0 ou +1), `t` o texto e `c` o contexto
 - As opções são embaralhadas a cada partida.
+- A ordem das perguntas durante o teste segue a ordem dos eixos em `AXES`, e não a posição em `QUESTIONS`. Dentro de um mesmo eixo, vale a ordem em `QUESTIONS`. Por isso as perguntas de cada versão podem ficar em blocos separados no código (há um bloco comentado "Perguntas da versão média").
 
 ## Guia de edição
 
@@ -75,7 +86,7 @@ Todas as mudanças são feitas em `index.html`. Depois de editar, siga o passo a
 
 ### Adicionar uma pergunta
 
-Acrescente um objeto à lista `QUESTIONS`, de preferência junto às outras perguntas do mesmo eixo:
+Acrescente um objeto à lista `QUESTIONS`, no bloco da versão a que a pergunta pertence. Não importa onde ela fica dentro da lista: durante o teste, as perguntas são agrupadas pelo eixo.
 
 ```js
 {axis:"trindade", nivel:2, tipo:"Afirmação", q:"Enunciado…",
@@ -107,6 +118,7 @@ Acrescente um objeto à lista `AXES`. A posição dele na lista define a ordem e
 - `L` e `R` são os dois erros opostos e `C` é a posição ortodoxa. Mantenha a lógica de *via média*: as pontas devem errar em direções contrárias.
 - `ini`: uma letra só, que aparece no medalhão. O medalhão de `C` fica azul (santo) e os de `L`/`R` ficam vermelhos (hereges).
 - Um eixo sem perguntas não aparece no resultado. Crie pelo menos duas perguntas para ele, uma afirmação e um dilema.
+- Um eixo que só tem perguntas de nível 2 aparece só a partir da versão média (é o caso dos ramos V e VI). Na versão curta, ele é simplesmente omitido do resultado.
 
 ### Adicionar um ramo
 
@@ -114,7 +126,7 @@ Os ramos não têm uma lista própria: um ramo é só o texto do campo `ramo` de
 
 1. Escolha o nome com numeração romana, por exemplo `"V · Moral"`.
 2. Use exatamente o mesmo texto em todos os eixos desse ramo. Qualquer diferença, até num espaço, cria um ramo separado.
-3. Coloque os eixos do ramo juntos na lista `AXES` e as perguntas deles juntas em `QUESTIONS`, para que o ramo apareça em bloco durante o teste.
+3. Coloque os eixos do ramo juntos na lista `AXES`. Como as perguntas seguem a ordem dos eixos, o ramo aparecerá em bloco durante o teste.
 4. Atualize a tela inicial (veja [Editar a tela inicial](#editar-a-tela-inicial)).
 
 ### Editar as sentenças do resultado
@@ -145,18 +157,18 @@ Na função `results()`:
 
 A tela inicial fica no HTML, dentro de `<section id="start">`, e não é gerada automaticamente. Sempre que acrescentar eixos, ramos ou perguntas, confira:
 
-- **Contadores** (`.stats`): "8 eixos", "4 ramos", "16 heresias". Conte duas heresias por eixo.
+- **Contadores** (`.stats`): hoje mostram "12 eixos", "6 ramos" e "24 erros". Conte dois erros por eixo. Eles descrevem a versão mais completa disponível.
 - **Cartões das versões** (`.ver`): número de perguntas e tempo estimado, em torno de 20 a 25 segundos por pergunta.
 - **Como funciona** (`.how`): só precisa mudar se a mecânica do teste mudar.
 
-### Ativar as versões média e longa
+### Ativar a versão longa
 
-No HTML, os botões `.ver` dessas versões estão com `disabled`. Quando houver perguntas de nível 2 ou 3:
+A versão média já está ativa. No HTML, o botão `.ver` da longa ainda está com `disabled`. Quando houver perguntas de nível 3:
 
-1. Troque `disabled` por `data-v="2"` (média) ou `data-v="3"` (longa).
+1. Troque `disabled` por `data-v="3"`.
 2. Remova o `<span class="soon">em preparação</span>`.
-3. Atualize o número de perguntas e o tempo no cartão.
-4. Se quiser, passe o selo "Recomendada" para a versão média: mova a classe `rec` do botão da curta para o da média.
+3. Atualize o número de perguntas, o tempo e o número de eixos no cartão.
+4. O selo "Recomendada" está na média (classe `rec`). Para mudá-lo de lugar, mova a classe para outro botão.
 
 ### Alterar a estética
 
@@ -193,10 +205,11 @@ As cores ficam em variáveis no início do `<style>`, dentro de `:root`:
 ## Fontes
 
 - Catecismo da Igreja Católica ([vatican.va](https://www.vatican.va/archive/cathechism_po/index_new/prima-pagina-cic_po.html))
-- Decretos dos concílios (Niceia I e II, Constantinopla I, Éfeso, Calcedônia, Orange, Trento, Vaticano I)
+- Decretos dos concílios (Niceia I e II, Constantinopla I e III, Éfeso, Calcedônia, Orange, Constança, Trento, Vaticano I e II: *Dei Verbum*, *Lumen Gentium*)
+- Documentos papais citados (*Execrabilis*, de Pio II, 1460; condenações do laxismo, de Inocêncio XI, 1679, e do tuciorismo, de Alexandre VIII, 1690)
 - Obras dos Padres citados (Inácio de Antioquia, Irineu, Agostinho, João Damasceno, Tomás de Aquino)
 
-> **Revisar antes de usar em aula:** as referências históricas e os números de parágrafos do Catecismo foram redigidos de memória e precisam de conferência, principalmente as datas dos sínodos menores (Quierzy 853, Frankfurt 794, Constantinopla 543).
+> **Revisar antes de usar em aula:** as referências históricas e os números de parágrafos do Catecismo foram redigidos de memória e precisam de conferência, principalmente as datas dos sínodos menores (Quierzy 853, Frankfurt 794, Constantinopla 543) e as referências da versão média (Execrabilis 1460, condenações de 1679 e 1690, Panarion 79 de Santo Epifânio, a frase atribuída a W. G. Ward).
 
 ## Publicação
 
@@ -204,6 +217,5 @@ A versão jogável está publicada [aqui](https://daisonpaz.github.io/santo-ou-h
 
 ## Próximos passos
 
-- Versão média: eixos de Igreja e autoridade, Escritura e Tradição, Moral (rigorismo ↔ laxismo) e Maria.
-- Versão longa: todas as afirmações e dilemas.
+- Versão longa: todas as afirmações e dilemas, com novos eixos (por exemplo: sacramentos e ministros, com donatismo; Igreja e Estado; fé e razão, com fideísmo e racionalismo; justificação).
 - Conferir as referências com os textos do vatican.va.
