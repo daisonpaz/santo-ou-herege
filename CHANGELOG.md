@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.1] — 2026-11-12
+
+### Documentação
+- README ganhou um "Guia de edição" com o passo a passo para adicionar eixos e ramos, editar sentenças, afinidades e a tela inicial, ativar as versões média e longa, alterar a estética e publicar atualizações.
+
 ## [0.1.0] — 2026-11-12
 
 ### Adicionado
