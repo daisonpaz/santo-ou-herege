@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.0] — 2026-11-12
+
+### Adicionado
+- "Aprofundar" de cada eixo agora mostra as perguntas daquele eixo, com todas as opções classificadas (ortodoxa ou heresia) e a resposta do jogador destacada, antes da história das posições.
+- Título do "Aprofundar" indica quantas respostas do eixo foram ortodoxas.
+
 ## [0.1.2] — 2026-11-12
 
 ### Adicionado

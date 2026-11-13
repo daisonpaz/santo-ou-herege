@@ -107,6 +107,18 @@ summary{cursor:pointer;color:var(--wine2);font-style:italic;font-size:16px}
 .pole{margin:10px 0;font-size:16px}
 .pole b{color:var(--wine)}
 .pole.ok b{color:#2f6a3a}
+.sub-h{font-family:Cinzel,serif;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:16px 0 6px}
+.rq{background:#fbf6ea;border:1px solid #e0d1b2;border-radius:10px;padding:12px 14px;margin:8px 0}
+.rq-q{font-size:17px;font-weight:500;margin:2px 0 8px}
+.rq ul{list-style:none;margin:0;padding:0}
+.rq li{font-size:15px;padding:7px 10px;margin:5px 0;border-radius:8px;border-left:4px solid #cdbb98;color:#5a4a3c;opacity:.75}
+.rq li.ok{border-left-color:#3f7a4a}
+.rq li.her{border-left-color:var(--red)}
+.rq li.mine{opacity:1;background:#f3e3d6;color:var(--ink);box-shadow:0 0 0 1.5px var(--wine2) inset}
+.rq li.ok.mine{background:#e3efdf;box-shadow:0 0 0 1.5px #3f7a4a inset}
+.rq .badge{display:block;font-family:Cinzel,serif;font-size:11px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.rq li.ok .badge{color:#2f6a3a}
+.rq li.her .badge{color:var(--red)}
 .disc{margin-top:36px;font-size:15px;color:#bfae93;text-align:center}
 .disc a{color:var(--gold2)}
 .actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:26px}
@@ -464,7 +476,10 @@ function results(){
     el.innerHTML=`<div class="rm"></div><h4></h4>
       <div class="spec"><span class="ctr"></span><span class="mk" style="left:50%"></span></div>
       <div class="ends"><div class="l"></div><div class="c"></div><div class="r"></div></div>
-      <details><summary>Aprofundar</summary>
+      <details><summary></summary>
+        <div class="sub-h">Suas respostas</div>
+        <div class="rqs"></div>
+        <div class="sub-h">As posições na história</div>
         <div class="pole"><b class="lt"></b> <span class="lh"></span></div>
         <div class="pole ok"><b class="ct"></b> <span class="ch"></span></div>
         <div class="pole"><b class="rt"></b> <span class="rh"></span></div>
@@ -480,6 +495,27 @@ function results(){
     el.querySelector(".ch").textContent=a.C.hist;
     el.querySelector(".rt").textContent=a.R.tag+" ("+a.R.fig+").";
     el.querySelector(".rh").textContent=a.R.hist;
+    // perguntas do eixo, com a resposta do jogador e a classificação de cada opção
+    const rqs = el.querySelector(".rqs");
+    qs.forEach((q,i)=>{ if(q.axis!==a.id) return;
+      const chosen = q.o[answers[i]];
+      const rq=document.createElement("div"); rq.className="rq";
+      rq.innerHTML=`<div class="qtype"></div><div class="rq-q"></div><ul></ul>`;
+      rq.querySelector(".qtype").textContent=q.tipo;
+      rq.querySelector(".rq-q").textContent=q.q;
+      const ul=rq.querySelector("ul");
+      q.o.slice().sort((x,y)=>x.p-y.p).forEach(o=>{
+        const pole = o.p<0?a.L:o.p>0?a.R:a.C;
+        const li=document.createElement("li");
+        li.className=(o.p===0?"ok":"her")+(o===chosen?" mine":"");
+        li.innerHTML=`<span class="badge"></span><span class="txt"></span>`;
+        li.querySelector(".badge").textContent=(o.p===0?"✠ ":"")+pole.tag+(o===chosen?" · sua resposta":"");
+        li.querySelector(".txt").textContent=o.t;
+        ul.appendChild(li);
+      });
+      rqs.appendChild(rq);
+    });
+    el.querySelector("summary").textContent=`Aprofundar: rever suas ${t.n} respostas e a história das posições (${t.C} de ${t.n} ortodoxas)`;
     box.appendChild(el);
     requestAnimationFrame(()=>setTimeout(()=>el.querySelector(".mk").style.left=pos+"%",80));
   });

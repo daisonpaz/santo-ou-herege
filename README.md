@@ -35,7 +35,11 @@ Cada **eixo** é uma controvérsia real. As pontas são dois erros opostos e o c
 | < 35% | Caminho assegurado para a santa fogueira inquisitória |
 
 - **Afinidades**: para cada figura, a fração das respostas do eixo dela que caíram no seu polo. Aparecem as 8 maiores.
-- **Perfil por eixo**: um marcador no espectro, calculado pela média dos valores (de -1 a +1), e a seção "Aprofundar", com a história, os concílios e os parágrafos do Catecismo de cada posição.
+- **Perfil por eixo**: um marcador no espectro, calculado pela média dos valores (de -1 a +1), e a seção "Aprofundar", que tem duas partes:
+  - **Suas respostas**: cada pergunta do eixo com todas as opções classificadas (✠ em verde para a ortodoxa, em vermelho com o nome da heresia para as demais) e a resposta do jogador destacada.
+  - **As posições na história**: quem defendeu cada posição, os concílios e os parágrafos do Catecismo.
+
+  O título do "Aprofundar" mostra quantas respostas do eixo foram ortodoxas (ex.: "2 de 2 ortodoxas").
 
 ## Conteúdo atual (v0.1.0, versão curta)
 
