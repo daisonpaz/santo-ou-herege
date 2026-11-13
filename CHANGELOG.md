@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.2] — 2026-11-12
+
+### Adicionado
+- Favicon: rosácea em vinho e ouro, embutida no `index.html`.
+
 ## [0.1.1] — 2026-11-12
 
 ### Documentação

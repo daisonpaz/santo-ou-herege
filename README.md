@@ -170,6 +170,7 @@ As cores ficam em variáveis no início do `<style>`, dentro de `:root`:
 - Trocar o valor de uma variável muda a cor em todo o teste.
 - As fontes são carregadas pela linha `<link href="https://fonts.googleapis.com/...">` e aplicadas em `body` (EB Garamond) e em `h1, h2, h3, .cinzel` (Cinzel). Para trocar uma fonte, mude as duas coisas.
 - A rosácea do topo é um desenho SVG dentro de `.hero`.
+- O favicon (o ícone da aba do navegador) é uma versão simplificada da rosácea, embutida no `<link rel="icon">` do `<head>`. É um SVG codificado como URL: no código, `%23` corresponde a `#` (então `%235a1a24` é a cor `#5a1a24`), `%3C` a `<` e `%3E` a `>`. Para trocar as cores, substitua os códigos depois de `%23`. Para trocar o desenho, escreva o SVG normalmente e converta-o com um codificador de "SVG para data URI".
 - O espectro de cada eixo no resultado usa o gradiente da classe `.spec`: vermelho nas pontas, verde no centro.
 
 ### Publicar uma atualização
